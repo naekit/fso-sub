@@ -1,0 +1,28 @@
+what is css
+p {
+    color: red;
+}
+selector{
+    property: property value;
+    ^^^^^^Declaration^^^^^^^
+}
+p{element selector}
+#id-selector
+.class-selector
+img[src]-attribute-selector
+a:hover-pseudo-class-selector
+
+font: property for fonts;
+
+padding = space around content
+border = just outside padding
+margin = space around the outside of the border
+
+margin | border | padding | element-width
+
+background-color == color behind element content
+color = content/text color
+text-shadow == drop shadow in text
+display == display mode of element
+
+centering image == {display: block; margin: 0 auto;}
