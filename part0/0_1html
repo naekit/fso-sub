@@ -16,6 +16,11 @@ ANATOMY OF HTML DOCUMENT
     <title>Document</title>
 </head>
 <body>
+    <img src="SOURCE TELLS WHERE IT COMES FROM" alt="VISUALLY IMPAIRED DESCRIPTION">
+    <h1>1 IMPORTANT</h1>
+    <h4>4 LESS IMPORTANT</h4>
+    <p>PARAGRAPH OF TEXT</p>
+    <a href="/">LINKS TO OTHER PARTS OR PAGES</a>
     
 </body>
 </html>
