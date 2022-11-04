@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Filter from './components/Filter'
 
+const api_key = process.env.REACT_APP_API_KEY
+
 const App = () => {
 
   const [filterVal, setFilter] = useState('')
@@ -23,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const disp = display[0] !== undefined ? display[0].capital: 'bern'
     axios
-      .get(`https://api.openweathermap.org/data/2.5/weather?q=${disp}&appid=e1d0b269b743ca11434225ed871bd4c5&units=metric`)
+      .get(`https://api.openweathermap.org/data/2.5/weather?q=${disp}&appid=${api_key}&units=metric`)
       .then(response => setWeather(response.data))
   }, [display])
   
