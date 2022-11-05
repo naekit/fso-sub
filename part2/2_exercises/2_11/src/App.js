@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import numberService from './services/numberService'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
@@ -13,10 +13,10 @@ const App = () => {
   // effect hook to get server
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => setPersons(response.data))
-  }, [])
+    numberService
+      .getAll()
+      .then(allPersons => setPersons(allPersons))
+  }, [persons])
   
   // handle filter and convert target value to lower case
   
@@ -25,17 +25,35 @@ const App = () => {
   }
 
   const submitPerson = (event) => {
-    if(persons.filter(x => x.name === newName).length){
-      alert(`${newName} is already added to the phone book`)
-      return
-    }
     event.preventDefault()
     const newPerson = {
       name: newName,
       number: newNumber
     }
-    setPersons(persons.concat(newPerson))
-    setNewName('')
+    if(persons.filter(x => x.name === newName).length){
+      const existing = persons.find(item => item.name === newName)
+      const altPerson = {...existing, number: newNumber}
+      console.log(existing.id)
+      numberService
+        .update(existing.id, altPerson)
+        .then(alteredPerson => {
+          setPersons(persons.map(person => person.id !== existing.id ? person: alteredPerson))
+        })
+      return
+    }
+    numberService
+      .create(newPerson)
+      .then(personObj => {
+        setPersons(persons.concat(personObj))
+        setNewName('')
+        setNumber('')
+      })
+  }
+
+  const delPerson = (event) => {
+    const id = event.target.value
+    numberService
+      .del(id)
   }
 
   const handleName = (event) => {
@@ -61,7 +79,7 @@ const App = () => {
       </form>
       <div>debug: {newName}</div>
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filterVal}/>
+      <Persons delPerson={delPerson} persons={persons} filter={filterVal}/>
     </div>
   )
 }

@@ -29,10 +29,18 @@ const App = () => {
       .then(alteredNote => {
         setNotes(notes.map(n => n.id !== id ? n: alteredNote))
       })
+      .catch(error => {
+        alert(
+          `the note "${note.content}" was already deleted from server`
+        )
+        setNotes(notes.filter(n => n.id !== id))
+      })
   }
 
   // checks if showAll is true, if yes then all notes shown, otherwise only important
   const notesToShow = showAll ? notes: notes.filter(note => note.important)
+
+  // add a new instance
   const addNote = (event) => {
     event.preventDefault()
     const noteObj = {
