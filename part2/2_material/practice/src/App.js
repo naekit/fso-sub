@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import axios from 'axios'
 import Note from "./components/Note"
+import noteService from './services/notes'
 
 const App = () => {
   const [notes, setNotes] = useState([])
@@ -10,16 +10,26 @@ const App = () => {
   // useEffect hook
 
   const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
-      .then(response => {
-        console.log('promise fulfilled')
-        setNotes(response.data)
+    noteService
+      .getAll()
+      .then(initialNote => {
+        setNotes(initialNote)
       })
   }
   
   useEffect(hook, [])
+
+  // check note importance
+  const toggleImportanceOf = (id) => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = {...note, important: !note.important}
+
+    noteService
+      .update(id, changedNote)
+      .then(alteredNote => {
+        setNotes(notes.map(n => n.id !== id ? n: alteredNote))
+      })
+  }
 
   // checks if showAll is true, if yes then all notes shown, otherwise only important
   const notesToShow = showAll ? notes: notes.filter(note => note.important)
@@ -29,11 +39,24 @@ const App = () => {
       content: newNote,
       date: new Date().toISOString(),
       important: Math.random() < 0.5,
-      id: notes.length + 1,
     }
-    setNotes(notes.concat(noteObj))
-    setNewNote('')
-    console.log('button clicked', event.target)
+
+    noteService
+      .create(noteObj)
+      .then(addedNote => {
+        setNotes(notes.concat(addedNote))
+        setNewNote('')
+      })
+    // axios
+    //   .post('http://localhost:3001/notes', noteObj)
+    //   .then(response => {
+    //     console.log(response)
+    //     setNotes(notes.concat(response.data))
+    //     setNewNote('')
+    //   })
+    // setNotes(notes.concat(noteObj))
+    // setNewNote('')
+    // console.log('button clicked', event.target)
   }
 
   const handleNote = (event) => {
@@ -51,7 +74,11 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map(note => 
-          <Note key={note.id} note={note} />
+          <Note 
+            key={note.id} 
+            note={note} 
+            toggleImportance={() => toggleImportanceOf(note.id)}
+          />
         )}
       </ul>
       <form onSubmit={addNote}>
