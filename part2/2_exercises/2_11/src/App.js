@@ -3,12 +3,15 @@ import numberService from './services/numberService'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNumber] = useState('')
   const [filterVal, setFilter] = useState('')
+  const [successMessage, setSuccess] = useState('')
+  const [errorMessage, setError] = useState('')
 
   // effect hook to get server
 
@@ -16,7 +19,7 @@ const App = () => {
     numberService
       .getAll()
       .then(allPersons => setPersons(allPersons))
-  }, [persons])
+  }, [])
   
   // handle filter and convert target value to lower case
   
@@ -39,6 +42,14 @@ const App = () => {
         .then(alteredPerson => {
           setPersons(persons.map(person => person.id !== existing.id ? person: alteredPerson))
         })
+        .catch((error) => {
+          setError(`${altPerson.name} has already been removed`)
+          console.log(error)
+          setPersons(persons.filter(person => person.id !== existing.id))
+          setTimeout(() => {
+            setError(null)
+          },3000)
+        })
       return
     }
     numberService
@@ -48,12 +59,27 @@ const App = () => {
         setNewName('')
         setNumber('')
       })
+      .then(() => {
+        setSuccess(
+          `Added ${newPerson.name}`
+        )
+        setTimeout(() => {
+          setSuccess(null)
+        }, 2000)
+      })
   }
 
   const delPerson = (event) => {
     const id = event.target.value
     numberService
       .del(id)
+      .then(() => {
+        let people = persons.filter((person) => person.id !== +id)
+        setPersons(people)
+      })
+      .catch(() => {
+        console.log('error caught');
+      })
   }
 
   const handleName = (event) => {
@@ -77,7 +103,12 @@ const App = () => {
           <button type="submit">add</button>
         </div>
       </form>
-      <div>debug: {newName}</div>
+      {
+      successMessage ? 
+        <Notification message={successMessage} cls='success' />:
+          errorMessage ? <Notification message={errorMessage} cls='error' />:
+            null
+      }
       <h2>Numbers</h2>
       <Persons delPerson={delPerson} persons={persons} filter={filterVal}/>
     </div>

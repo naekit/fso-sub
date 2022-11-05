@@ -45,13 +45,13 @@
     {
       "content": "get this",
       "date": "2022-11-05T00:04:36.196Z",
-      "important": true,
+      "important": false,
       "id": 8
     },
     {
       "content": "heyy heyyy",
       "date": "2022-11-05T16:02:22.057Z",
-      "important": true,
+      "important": false,
       "id": 9
     }
   ]
