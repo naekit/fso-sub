@@ -38,7 +38,6 @@ const mostLikes = (blogs) => {
             count[blogs[i].author] = blogs[i].likes
         }
     }
-    console.log(count)
     const blogger = Object.keys(count).reduce((a,b) => count[a] > count[b] ? a: b)
     let biggest = blogs.find(({author}) => author === blogger)
     return {
