@@ -22,3 +22,13 @@ test('correct number of json obj blogs', async() => {
 
     expect(response.body).toHaveLength(helper.initialBlogs.length)  
 })
+
+test('id property named id, and defined', async() => {
+    const response = await api.get('/api/blogs')
+
+    expect(response.body[0].id).toBeDefined()
+})
+
+test('post method increase blogs by 1 and contents are correct', async () => {
+    
+})
