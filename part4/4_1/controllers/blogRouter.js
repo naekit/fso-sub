@@ -25,7 +25,12 @@ blogRouter.get('/:id', (req,res,next) => {
 blogRouter.post('/', (req,res,next) => {
     const body = req.body
     
-    const blog = new Blog(body)
+    const blog = new Blog({
+        title: body.title,
+        author: body.author,
+        url: body.url,
+        likes: body.likes || 0
+    })
 
     blog.save()
         .then(savedPost => {
