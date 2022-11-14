@@ -88,3 +88,31 @@ test('if title or url missing in post get 400 error', async () => {
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 })
+
+test('delete specific blog post', async () => {
+    const postsAtStart = await helper.blogsInDb()
+    const blogToDelete = postsAtStart[0]
+
+    await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+    const postsAtEnd = await helper.blogsInDb()
+
+    expect(postsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+
+    const titles = postsAtEnd.map(p => p.title)
+    expect(titles).not.toContain(blogToDelete.title)
+})
+
+test('updates blog with correct info', async () => {
+    const postsAtStart = await helper.blogsInDb()
+    const blogToUpdate = postsAtStart[0]
+
+    await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send({...blogToUpdate, likes: 10})
+        .expect(200)
+    const postsAtEnd = await helper.blogsInDb()
+
+    expect(postsAtEnd[0].likes).toBe(10)
+})
