@@ -40,11 +40,11 @@ blogRouter.post('/', async (req,res,next) => {
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
 
-    res.json(savedBlog)
+    res.status(201).json(savedBlog)
 })
 
 blogRouter.delete('/:id', async (req,res,next) => {
-    
+
     const blog = await Blog.findById(req.params.id)
     if(blog.user.toString() === req.user._id.toString()){
         await Blog.findByIdAndRemove(req.params.id)
