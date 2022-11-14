@@ -65,7 +65,6 @@ describe('requires user authenticator', () => {
             url: "https://www.stagedchaos.com",
             likes: 999,
         }
-        console.log(authToken)
         await api
             .post('/api/blogs')
             .send(newBlog)
@@ -78,6 +77,19 @@ describe('requires user authenticator', () => {
 
         const title = blogsAtEnd.map(r => r.title)
         expect(title).toContain('consistency')
+    })
+
+    test('adding blog fails without proper authenticator', async () => {
+        const newBlog = {
+            title: "consistency",
+            author: "nikita natkha",
+            url: "https://www.stagedchaos.com",
+            likes: 999,
+        }
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(401)
     })
 
     test('if likes property missing likes default to 0', async () => {

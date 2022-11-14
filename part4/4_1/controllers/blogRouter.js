@@ -27,6 +27,10 @@ blogRouter.post('/', async (req,res,next) => {
     const body = req.body
 
     const user = req.user
+
+    if(user === null){
+        res.status(401).end()
+    }
     
     const blog = new Blog({
         title: body.title,
