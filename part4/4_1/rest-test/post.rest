@@ -1,1 +1,10 @@
-DELETE  http://localhost:4000/api/blogs/6370085fa76f2b499ec25ba4
+POST http://localhost:4000/api/blogs
+Content-Type: application/json
+
+{
+    "title": "User Authenticated Blog",
+    "author": "nikita",
+    "url": "nikita.com",
+    "likes": 19,
+    "userId": "637296d01b6827e2524735a5"
+}
