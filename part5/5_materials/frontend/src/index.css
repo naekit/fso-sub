@@ -1,0 +1,33 @@
+h1 {
+    color: slategray;
+    font-style: italic;
+}
+.mainBtn{
+    border: 1px rgb(218, 216, 216) solid;
+    height: 30px;
+    width: 120px;
+    margin-left: 10px;
+    color: white;
+    background-color: rgb(136, 131, 131);
+}
+.note {
+    color: rgb(66, 66, 66);
+    padding-top: 5px;
+    font-size: 15px;
+    list-style:none;
+    margin-left: -30px;
+}
+.note button{
+    margin-right: 15px;
+    height: 30px;
+    width: 120px;
+    border: 1px rgb(218, 216, 216) solid;
+}
+.error {
+    color: red;
+    background-color: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    padding: 10px;
+    margin: 10px;
+}

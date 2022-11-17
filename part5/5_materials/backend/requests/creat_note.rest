@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYzNzI2NTQxYmVjOTM1Y2I1ZTRhNmY4ZiIsImlhdCI6MTY2ODQ0Nzk4Nn0.jhyfgdNPKxNuO4qUKMmdKNkhrAEFJEVn0ssvNIUMm2g
+
+{
+    "content": "authentication of user is easy!",
+    "important": false,
+    "userId": "63726541bec935cb5e4a6f8f"
+}
