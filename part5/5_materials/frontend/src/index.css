@@ -1,14 +1,20 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 h1 {
     color: slategray;
-    font-style: italic;
+    font-style: bold;
 }
 .mainBtn{
-    border: 1px rgb(218, 216, 216) solid;
+    border: 1px rgb(150, 144, 144) solid;
     height: 30px;
     width: 120px;
     margin-left: 10px;
-    color: white;
-    background-color: rgb(136, 131, 131);
+    color: black;
+    background-color: rgb(202, 203, 255);
+}
+.mainBtn:hover{
+    background-color: rgb(171, 173, 247);
 }
 .note {
     color: rgb(66, 66, 66);
@@ -30,4 +36,22 @@ h1 {
     border-style: solid;
     padding: 10px;
     margin: 10px;
+}
+.create-note, .login {
+    margin: 10px;
+}
+.create-note>input, .login input{
+    height: 26px;
+    border: 1px solid lightblue;
+}
+.create-note button{
+    /* height: 30px; */
+    padding: 6px 10px;
+    border-radius: 0;
+    border: 1px solid lightblue;
+}
+.login button {
+    padding: 5px 88.5px;
+    border-radius: 0;
+    border: 1px solid lightblue;
 }
