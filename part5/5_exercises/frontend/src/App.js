@@ -19,7 +19,6 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       blogService.setToken(user.token)
-      console.log('tokenized log in');
     }
   }, [])
 
@@ -43,14 +42,12 @@ const App = () => {
       
       setUsername('')
       setPassword('')
-      console.log(user)
     } catch (exception) {
       setText(`wrong username or password`)
       setTimeout(() => {
         setText(null)
       }, 5000)
     }
-    console.log(user, password)
   }
 
   // logOut
