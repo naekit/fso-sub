@@ -28,10 +28,10 @@ const App = () => {
 
   // useEffect to get all blogs
   useEffect(() => {
-    blogService.getAll().then(blogs =>{
+    blogService.getAll().then(blogs => {
       setBlogs( blogs.sort((a,b) => b.likes - a.likes) )
     }
-    )  
+    )
   }, [])
 
   // get login info and set token
@@ -44,11 +44,11 @@ const App = () => {
 
       window.localStorage.setItem('userAppToken', JSON.stringify(user))
       setUser(user)
-      
+
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setText(`wrong username or password`)
+      setText('wrong username or password')
       setTimeout(() => {
         setText(null)
       }, 5000)
@@ -73,14 +73,14 @@ const App = () => {
 
         setText(`a new blog ${obj.title} by ${obj.author} added`)
         setTimeout(() => {
-        setText(null)
-      }, 5000)
+          setText(null)
+        }, 5000)
       })
   }
   // add like
   const addLike = (id) => {
     const blog = blogs.find(b => b.id === id)
-    const newBlog = {...blog, likes: blog.likes += 1}
+    const newBlog = { ...blog, likes: blog.likes += 1 }
 
     blogService
       .update(id, newBlog)
@@ -103,7 +103,8 @@ const App = () => {
           setBlogs(blogs.filter(b => b.id !== id))
         })
         .catch(err => {
-          setText(`sorry not authorized`)
+          console.error(err)
+          setText('sorry not authorized')
           setTimeout(() => {
             setText(null)
           }, 5000)
@@ -121,8 +122,8 @@ const App = () => {
           type="text"
           placeholder='username'
           name='Username'
-          value={username} 
-          onChange={({target}) => setUsername(target.value)}
+          value={username}
+          onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
@@ -130,8 +131,8 @@ const App = () => {
           type="password"
           placeholder='password'
           name='Password'
-          value={password} 
-          onChange={({target}) => setPassword(target.value)}
+          value={password}
+          onChange={({ target }) => setPassword(target.value)}
         />
       </div>
       <button type='submit'>login</button>
@@ -149,22 +150,22 @@ const App = () => {
   return (
     <div>
       {user === null ?
-      LoginForm():
-      <div>
-        <h2>blogs</h2>
-        {msgText && <Message text={msgText} type={'success'} />}
-        <p>{user.name} logged in <button onClick={logOut}>log out</button></p>
-        {blogForm()}
-        {blogs.map(blog =>
-          <Blog 
-            key={blog.id} 
-            blog={blog} 
-            user={user}
-            addLike={() => addLike(blog.id)}
-            remove={() => remove(blog.id)}
-          />
-        )}
-      </div>
+        LoginForm():
+        <div>
+          <h2>blogs</h2>
+          {msgText && <Message text={msgText} type={'success'} />}
+          <p>{user.name} logged in <button onClick={logOut}>log out</button></p>
+          {blogForm()}
+          {blogs.map(blog =>
+            <Blog
+              key={blog.id}
+              blog={blog}
+              user={user}
+              addLike={() => addLike(blog.id)}
+              remove={() => remove(blog.id)}
+            />
+          )}
+        </div>
       }
     </div>
   )

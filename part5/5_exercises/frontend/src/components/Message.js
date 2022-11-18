@@ -1,13 +1,13 @@
-const Message = ({text,type}) => {
-    if(text === null){
-        return null
-    }
+const Message = ({ text,type }) => {
+  if(text === null){
+    return null
+  }
 
-    return (
-        <div className={type}>
-            {text}
-        </div>
-    )
+  return (
+    <div className={type}>
+      {text}
+    </div>
+  )
 }
 
 export default Message
