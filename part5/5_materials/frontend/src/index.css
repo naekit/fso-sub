@@ -2,7 +2,8 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 h1 {
-    color: slategray;
+    color: rgb(171, 173, 247);
+    text-shadow: 0px 0px 1.4px black;
     font-style: bold;
 }
 .mainBtn{
@@ -31,7 +32,7 @@ h1 {
 }
 .error {
     color: red;
-    background-color: lightgrey;
+    background-color: rgba(231, 231, 231, 0.74);
     font-size: 20px;
     border-style: solid;
     padding: 10px;
@@ -54,4 +55,31 @@ h1 {
     padding: 5px 88.5px;
     border-radius: 0;
     border: 1px solid lightblue;
+}
+.two {
+    margin: 3px 10px;
+}
+.noteForm {
+    margin: 10px;
+    width: 250px;
+}
+.noteForm h2{
+    font-weight: 400;
+    font-size: 22px;
+    margin: 5px 0;
+    color: rgb(115, 145, 155);
+}
+.noteForm input{
+    height: 26px;
+    width: 97%;
+}
+.noteForm button{
+    padding: 6px 10px;
+    border-radius: 0;
+    border: 1px solid lightblue;
+    width: 100%;
+}
+.userName{
+    color: rgb(11, 167, 146);
+    margin: 10px;
 }
