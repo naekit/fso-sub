@@ -10,3 +10,72 @@
     width: 40%;
     border: 1px solid orange;
 }
+.blog{
+    border: 1px solid black;
+    margin: 10px 0;
+    padding: 10px 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 8%;
+}
+.blog .hide{
+    border: 1px solid black;
+    background-color: aqua;
+    height: 40px;
+    margin-right: 10px;
+    transition: all 200ms;
+}
+.blog .hide:hover, .blog .hide:active{
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    background-color: rgb(156, 189, 250);
+    height: 40px;
+    margin-right: 10px;
+}
+.info{
+    width: 100%;
+    overflow:scroll;
+    display: flex;
+    flex-direction: column;
+}
+.info p{
+    margin: 1px;
+}
+.like{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90px;
+    height: 30px ;
+    background-color: cornflowerblue;
+    transition: all 200ms;
+}
+.like:hover{
+    border: none;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+
+    background-color: rgb(127, 161, 224);
+}
+.like span{
+    color: white;
+    font-weight: 900;
+    font-size: 18px;
+}
+.remove{
+    background-color: red;
+    width: 30%;
+    border: none;
+    border-bottom: 3px solid black;
+    border-right: 3px solid black;
+    margin: 10px 0;
+    padding: 5px 0;
+    font-weight: 900;
+    transition: all 200ms;
+}
+.remove:hover{
+    background-color: red;
+    border-top: 3px solid black;
+    border-left: 3px solid black;
+}

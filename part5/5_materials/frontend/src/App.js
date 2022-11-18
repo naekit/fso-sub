@@ -72,16 +72,6 @@ const App = () => {
       .then(addedNote => {
         setNotes(notes.concat(addedNote))
       })
-    // axios
-    //   .post('http://localhost:3001/notes', noteObj)
-    //   .then(response => {
-    //     console.log(response)
-    //     setNotes(notes.concat(response.data))
-    //     setNewNote('')
-    //   })
-    // setNotes(notes.concat(noteObj))
-    // setNewNote('')
-    // console.log('button clicked', event.target)
   }
 
   // updates login info

@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import Message from './components/Message'
+import Toggle from './components/Toggle'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -10,7 +12,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [blogObj, setBlogObj] = useState({title:'', author:'', url:''})
+
+  // reference for blogForm
+  const blogFormRef = useRef()
 
   // useEffect to check if logged in
   useEffect(() => {
@@ -24,8 +28,9 @@ const App = () => {
 
   // useEffect to get all blogs
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+    blogService.getAll().then(blogs =>{
+      setBlogs( blogs.sort((a,b) => b.likes - a.likes) )
+    }
     )  
   }, [])
 
@@ -58,27 +63,53 @@ const App = () => {
   }
 
   // handleBlog
-  const handleBlog = async (event) => {
-    event.preventDefault()
-    try {
-      const addedNew = await blogService.create(blogObj)
+  const handleBlog = (obj) => {
+    blogFormRef.current.toggleVisibility()
+    blogService
+      .create(obj)
+      .then(addedNew => {
+        console.log(addedNew)
+        setBlogs(blogs.concat(addedNew))
 
-      setBlogs(blogs.concat(addedNew))
-
-      setText(`a new blog ${blogObj.title} by ${blogObj.author} added`)
-      setTimeout(() => {
+        setText(`a new blog ${obj.title} by ${obj.author} added`)
+        setTimeout(() => {
         setText(null)
       }, 5000)
+      })
+  }
+  // add like
+  const addLike = (id) => {
+    const blog = blogs.find(b => b.id === id)
+    const newBlog = {...blog, likes: blog.likes += 1}
 
-      setBlogObj({title: '', author: '', url: ''})
-    } catch (error) {
-      console.log(error)
-    }
+    blogService
+      .update(id, newBlog)
+      .then(changedBlog => {
+        setBlogs(blogs.map(b => b.id === id ? changedBlog: b))
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
-  // handleBlogForm
-  const handleBlogForm = (event) => {
-    setBlogObj({...blogObj, [event.target.name]: event.target.value})
+  // remove blog
+  const remove = (id) => {
+    const b = blogs.filter(b => b.id === id)[0]
+    if(window.confirm(`Remove blog ${b.title} by ${b.author}`)){
+      blogService
+        .remove(id)
+        .then(res => {
+          console.log(res)
+          setBlogs(blogs.filter(b => b.id !== id))
+        })
+        .catch(err => {
+          setText(`sorry not authorized`)
+          setTimeout(() => {
+            setText(null)
+          }, 5000)
+        })
+    }
+    return
   }
 
   // login form
@@ -108,37 +139,12 @@ const App = () => {
   )
 
   // new blog form
-  const BlogForm = () => (
-    <form onSubmit={handleBlog}>
-      <div>
-        <input
-          type="text"
-          placeholder='title'
-          name='title'
-          value={blogObj.title} 
-          onChange={handleBlogForm}
-        />
-      </div>
-      <div>
-        <input
-          type="author"
-          placeholder='author'
-          name='author'
-          value={blogObj.author} 
-          onChange={handleBlogForm}
-        />
-      </div>
-      <div>
-        <input
-          type="url"
-          placeholder='url'
-          name='url'
-          value={blogObj.url} 
-          onChange={handleBlogForm}
-        />
-      </div>
-      <button type='submit'>create</button>
-    </form>
+  const blogForm = () => (
+    <Toggle label={'add blog'} ref={blogFormRef}>
+      <BlogForm
+        submit={handleBlog}
+      />
+    </Toggle>
   )
   return (
     <div>
@@ -148,9 +154,15 @@ const App = () => {
         <h2>blogs</h2>
         {msgText && <Message text={msgText} type={'success'} />}
         <p>{user.name} logged in <button onClick={logOut}>log out</button></p>
-        {BlogForm()}
+        {blogForm()}
         {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
+          <Blog 
+            key={blog.id} 
+            blog={blog} 
+            user={user}
+            addLike={() => addLike(blog.id)}
+            remove={() => remove(blog.id)}
+          />
         )}
       </div>
       }

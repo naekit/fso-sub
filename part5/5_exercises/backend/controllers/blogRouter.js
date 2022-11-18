@@ -27,7 +27,6 @@ blogRouter.post('/', async (req,res,next) => {
     const body = req.body
 
     const user = req.user
-
     if(user === null){
         res.status(401).end()
     }
@@ -48,7 +47,6 @@ blogRouter.post('/', async (req,res,next) => {
 })
 
 blogRouter.delete('/:id', async (req,res,next) => {
-
     const blog = await Blog.findById(req.params.id)
     if(blog.user.toString() === req.user._id.toString()){
         await Blog.findByIdAndRemove(req.params.id)
@@ -63,13 +61,14 @@ blogRouter.put('/:id', (req,res,next) => {
         title: body.title,
         author: body.author,
         url: body.url,
-        likes: body.likes
+        likes: body.likes,
     }
 
     Blog.findByIdAndUpdate(req.params.id, blog, {new: true})
         .then(updatedPost => {
             res.json(updatedPost)
         })
+        
         .catch(err => next(err))
 })
 
