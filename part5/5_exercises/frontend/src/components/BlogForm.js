@@ -19,6 +19,7 @@ const BlogForm = ({ submit }) => {
     <form onSubmit={addBlog}>
       <div>
         <input
+          id='title'
           type="text"
           placeholder='title'
           name='title'
@@ -28,6 +29,7 @@ const BlogForm = ({ submit }) => {
       </div>
       <div>
         <input
+          id='author'
           type="author"
           placeholder='author'
           name='author'
@@ -37,6 +39,7 @@ const BlogForm = ({ submit }) => {
       </div>
       <div>
         <input
+          id='url'
           type="url"
           placeholder='url'
           name='url'

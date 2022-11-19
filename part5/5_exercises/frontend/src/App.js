@@ -119,6 +119,7 @@ const App = () => {
       {msgText && <Message text={msgText} type={'error'} />}
       <div>
         <input
+          id='username'
           type="text"
           placeholder='username'
           name='Username'
@@ -128,6 +129,7 @@ const App = () => {
       </div>
       <div>
         <input
+          id='password'
           type="password"
           placeholder='password'
           name='Password'
