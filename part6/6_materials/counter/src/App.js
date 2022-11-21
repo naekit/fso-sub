@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import noteService from "./services/notes";
-import { setNotes } from "./reducers/noteReducer";
+import { initializeNotes } from "./reducers/noteReducer";
 import { useDispatch } from "react-redux";
 
 import FilterForm from "./Components/FilterForm";
@@ -10,9 +9,7 @@ import Notes from "./Components/Notes";
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    noteService
-      .getAll()
-      .then(notes => dispatch(setNotes(notes)))
+    dispatch(initializeNotes())
   }, [dispatch])
 
   return (

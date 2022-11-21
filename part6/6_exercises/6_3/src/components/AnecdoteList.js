@@ -19,20 +19,28 @@ const Anecdote = ({anecdote, handleVote}) => {
 
 const AnecdoteList = () => {
     const dispatch = useDispatch()
-    const state = useSelector(state => state.anecdotes)
-    const notification = useSelector(state => state.notifications)
-    const filter = useSelector(state => state.filter).toLowerCase()
-
-    const filtered = state.filter(anecdote => anecdote.content.toLowerCase().includes(filter))
+    const notification = useSelector(state => state.notifications.message)
+    const state = useSelector(({filter, anecdotes }) => {
+        if(filter){
+            return anecdotes.filter(anecdote => anecdote
+                .content
+                .toLowerCase()
+                .includes(filter.toLowerCase())
+            )
+        } else{
+            return anecdotes
+        }
+    })
 
     const vote = (anecdote) => {
-        dispatch(voteFor(anecdote.id))
-        dispatch(setNotification(`you voted for '${anecdote.content}'`))
+        dispatch(voteFor(anecdote))
+        dispatch(setNotification(`you voted for '${anecdote.content}'`, 2))
     }
+    
     return (
         <>
         {notification && <Notification />}
-        {filtered.map(anecdote => 
+        {state.map(anecdote => 
             <Anecdote
                 key={anecdote.id}
                 anecdote={anecdote}

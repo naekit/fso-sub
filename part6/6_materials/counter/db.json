@@ -19,6 +19,16 @@
       "content": "nodes reload when added",
       "important": false,
       "id": 4
+    },
+    {
+      "content": "asynchronous actions return a function that gets notes and sets notes through a dispatcher",
+      "important": true,
+      "id": 5
+    },
+    {
+      "content": "creating a new note also happens in the reducer, simplifying the main component",
+      "important": false,
+      "id": 6
     }
   ]
 }
