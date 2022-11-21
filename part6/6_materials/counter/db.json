@@ -29,6 +29,16 @@
       "content": "creating a new note also happens in the reducer, simplifying the main component",
       "important": false,
       "id": 6
+    },
+    {
+      "content": "props.function instead of dispatch() is a way to use connect",
+      "important": true,
+      "id": 7
+    },
+    {
+      "content": "creating complex connect notes",
+      "important": true,
+      "id": 8
     }
   ]
 }

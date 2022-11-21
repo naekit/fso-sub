@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { toggleImportanceOf } from "../reducers/noteReducer";
-import noteService from "../services/notes";
 
 const Note = ({ note, handleClick }) => {
     return(
@@ -11,31 +10,25 @@ const Note = ({ note, handleClick }) => {
     )
 }
 
-const Notes = () => {
-    const dispatch = useDispatch()
-    const notes = useSelector(({filter, notes}) => {
-        if(filter === 'ALL'){
-            return notes
-        } else if(filter === 'IMPORTANT'){
-            return notes.filter(note => note.important)
-        } else {
-            return notes.filter(note => !note.important)
-        }
-    })
-
-    const updateNote = async (note) => {
-        const addNote = await noteService.updateNote(note)
-        dispatch(toggleImportanceOf(addNote))
-    }
+const Notes = (props) => {
+    // const notes = useSelector(({filter, notes}) => {
+    //     if(filter === 'ALL'){
+    //         return notes
+    //     } else if(filter === 'IMPORTANT'){
+    //         return notes.filter(note => note.important)
+    //     } else {
+    //         return notes.filter(note => !note.important)
+    //     }
+    // })
 
     return(
         <ul>
-            {notes.map(note => 
+            {props.notes.map(note => 
                 <Note
                     key={note.id}
                     note={note}
                     handleClick={
-                        () => updateNote(note)
+                        () => props.toggleImportanceOf(note)
                     }
                 />
             )}
@@ -43,4 +36,26 @@ const Notes = () => {
     )
 }
 
-export default Notes
+const mapStateToProps = (state) => {
+    if (state.filter === 'ALL'){
+        return {
+            notes: state.notes
+        }
+    } else if(state.filter === 'IMPORTANT'){
+        return {
+            notes: state.notes.filter(note => note.important)
+        }
+    } else {
+        return {
+            notes: state.notes.filter(note => !note.important)
+        }
+    }
+}
+
+const mapDispatchToProps = {
+    toggleImportanceOf,
+}
+
+const ConnectedNotes = connect(mapStateToProps, mapDispatchToProps)(Notes)
+
+export default ConnectedNotes

@@ -3,7 +3,7 @@
     {
       "content": "If it hurts, do it more often",
       "id": "47145",
-      "votes": 18
+      "votes": 29
     },
     {
       "content": "Adding manpower to a late software project makes it later!",
@@ -18,27 +18,17 @@
     {
       "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
       "id": "36975",
-      "votes": 4
+      "votes": 5
     },
     {
       "content": "Premature optimization is the root of all evil.",
       "id": "25170",
-      "votes": 2
+      "votes": 3
     },
     {
       "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
       "id": "98312",
       "votes": 2
-    },
-    {
-      "content": "hello",
-      "votes": 0,
-      "id": "OjyRkDn"
-    },
-    {
-      "content": "whats new",
-      "votes": 1,
-      "id": "D7DooVY"
     },
     {
       "content": "creating anecdotes on backend only requires a route service(axios) and to alter reducer to push the res.data from that service",
@@ -52,28 +42,13 @@
     },
     {
       "content": "create needs await",
-      "votes": 17,
+      "votes": 22,
       "id": "jfv3-n4"
     },
     {
-      "content": "get",
+      "content": "connect function ",
       "votes": 0,
-      "id": "4aClKhN"
-    },
-    {
-      "content": "get",
-      "votes": 0,
-      "id": "WMlZUxb"
-    },
-    {
-      "content": "great",
-      "votes": 0,
-      "id": "OlMvMyh"
-    },
-    {
-      "content": "great",
-      "votes": 0,
-      "id": "Gnb78-E"
+      "id": "MNDc2Jq"
     }
   ]
 }
