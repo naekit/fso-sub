@@ -8,7 +8,6 @@ import {
   Route,
   Link,
   Navigate,
-  useParams,
   useNavigate,
   useMatch,
 } from "react-router-dom"
@@ -81,6 +80,7 @@ const Login = (props) => {
 }
 
 const App = () => {
+  // eslint-disable-next-line no-unused-vars
   const [notes, setNotes] = useState([
     {
       id: 1,
