@@ -63,7 +63,7 @@ const App = () => {
   useEffect(() => {
     noteService.load()
     personService.load()
-  },[])
+  },[noteService, personService])
   
   return (
     <div>
