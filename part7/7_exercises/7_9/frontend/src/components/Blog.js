@@ -3,6 +3,19 @@ import { addComment, addLike, deleteBlog } from '../reducers/blogReducer'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 
+const CommentBox = styled.div`
+  padding: 1em;
+  margin: 10px 0;
+  background: rgb(230,230,230);
+  color: black;
+  border: black 1px solid;
+  transition: all 200ms;
+  font-size: 1.2rem;
+  &:hover{
+    border-color: white;
+  }
+`
+
 const CommentBtn = styled.button`
   background: white;
   padding: 1em;
@@ -11,6 +24,7 @@ const CommentBtn = styled.button`
   width: 100%;
   border: black 1px solid;
   transition: all 200ms;
+  margin-bottom: 10px;
   &:hover{
     border-right: black 4px solid;
     border-bottom: black 4px solid;
@@ -20,7 +34,7 @@ const CommentBtn = styled.button`
 const Split = styled.div`
     display: flex;
     justify-content: space-between;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     color: black;
     margin: 2rem 0;
 `
@@ -122,10 +136,10 @@ const Blog = ({blog}) => {
             </form>
             {blog.comments[0] &&
             <>
-              <h3>comments</h3>
+              <h3>COMMENTS</h3>
               <ul>
                 {blog.comments.map(comment => 
-                  <li key={comment.id}>{comment.text}</li>
+                  <CommentBox key={comment.id}>{comment.text}</CommentBox>
                 )}
               </ul>
             </>
