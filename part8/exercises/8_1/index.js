@@ -183,7 +183,7 @@ const resolvers = {
                 ...author,
                 born: args.born
             }
-            authors = authors.concat(authorNew)
+            authors = authors.map(a => a.id !== authorNew.id ? a: authorNew)
             return authorNew
         }
     }

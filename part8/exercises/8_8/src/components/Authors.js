@@ -1,8 +1,10 @@
-const Authors = (props) => {
-  if (!props.show) {
+import EditAuthor from "./EditAuthor"
+
+const Authors = ({ authors, show }) => {
+
+  if (!show) {
     return null
   }
-  const authors = []
 
   return (
     <div>
@@ -23,6 +25,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+      <EditAuthor selectAuthors={authors} />
     </div>
   )
 }
