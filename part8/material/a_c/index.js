@@ -8,8 +8,6 @@ const User = require('./models/user')
 const MONGO_URI = process.env.MONGODB_URI
 const JWT_SECRET = process.env.JWT_SECRET
 
-console.log(MONGO_URI)
-
 mongoose.connect(MONGO_URI)
     .then(() => {
         console.log('connected to MongoDB')
