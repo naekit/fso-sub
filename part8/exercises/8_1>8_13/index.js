@@ -172,19 +172,17 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-        let booksAll
+        let booksQ = await Book.find({}).populate('author').exec()
         if(args.author){
-            const booksBy = books.filter(b => b.author === args.author)
+            const booksBy = booksQ.filter(b => b.author === args.author)
             args.genre 
-                ? booksAll = booksBy.filter(b => b.genres.includes(args.genre))
-                : booksAll = booksBy
+                ? booksQ = booksBy.filter(b => b.genres.includes(args.genre))
+                : booksQ = booksBy
         } else if (args.genre){
-            const booksIn = books.filter(b => b.genres.includes(args.genre))
-            booksAll = booksIn
-        } else {
-            booksAll = await Book.find({})
+            const booksIn = booksQ.filter(b => b.genres.includes(args.genre))
+            booksQ = booksIn
         }
-        return booksAll
+        return booksQ
     },
     allAuthors: async () => {
         return await Author.find({})
@@ -195,26 +193,37 @@ const resolvers = {
   },
   Author: {
     bookCount: (root) => {
-        const booksBy = Books.find({ author: { name: root.name }})
+        const booksBy = Book.find({ author: { name: root.name }})
         return booksBy.length
     }
   },
   Mutation: {
     addBook: async (root, args, {currentUser}) => {
+        console.log(args, currentUser)
         if(!currentUser){
           throw new AuthenticationError("not authenticated")
         }
-        const author = new Author({ name: args.author })
-        const book = new Book({...args, author: author.id})
         try {
-          await author.save()
-          await book.save()
+          const testAuthor = await Author.find({ name: args.author })
+          console.log(testAuthor)
+          if(!testAuthor[0]){
+            const author = new Author({ name: args.author })
+            const book = new Book({...args, author: author.id})
+            console.log(author)
+            await author.save()
+            await book.save()
+          } else {
+            const book = new Book({...args, author: testAuthor[0]._id})
+            await book.save()
+          }
         } catch (error) {
           throw new UserInputError(error.message, {
             invalidArgs: args,
           })
         }
-        return book
+        const book = await Book.find({title: args.title}).populate('author').exec()
+        console.log(book[0])
+        return book[0]
         // const author = authors.find(a => a.name === args.author)
         // if(!author){
         //     authors = authors.concat({
@@ -254,7 +263,7 @@ const resolvers = {
         // }
     },
     createUser: async (root ,args) => {
-        const user = new User({ username: args.username})
+        const user = new User({ ...args})
 
         return user.save()
           .catch((error) => {
@@ -283,6 +292,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({req}) => {
+    console.log(req.headers.authorization)
     const auth = req ? req.headers.authorization : null
     if (auth && auth.toLowerCase().startsWith('bearer ')){
         const decodedToken = jwt.verify(

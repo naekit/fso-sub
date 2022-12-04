@@ -20,7 +20,7 @@ const EditAuthor = ({ selectAuthors }) => {
     setBorn('')
   }
   let authorList = selectAuthors.map(a => a.name)
-  console.log(name)
+  
   return (
     <div>
       <form onSubmit={submit}>
@@ -43,7 +43,7 @@ const EditAuthor = ({ selectAuthors }) => {
             onChange={({ target }) => setBorn(Number(target.value))}
           />
         </div>
-        <button type="submit">create book</button>
+        <button type="submit">edit author birth date</button>
       </form>
     </div>
   )
