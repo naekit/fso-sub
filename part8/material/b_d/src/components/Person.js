@@ -1,5 +1,9 @@
 const Person = ({ person, onClose }) => {
-    return (
+  if(!person){
+    return null
+  }
+
+  return (
       <div>
         <h2>{person.name}</h2>
         <div>

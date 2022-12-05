@@ -1,9 +1,21 @@
 import { useState } from "react"
 import { useQuery } from '@apollo/client'
-import Person from "./Person"
 import PersonForm from "./PersonForm"
 import { FIND_PERSON } from "../queries"
 import EditForm from "./EditForm"
+
+const Person = ({ person, onClose }) => {
+  return (
+    <div>
+      <h2>{person?.name}</h2>
+      <div>
+        {person?.address.street} {person?.address.city}
+      </div>
+      <div>{person?.phone}</div>
+      <button onClick={onClose}>close</button>
+    </div>
+  )
+}
 
 const Persons = ({ persons, setError }) => {
     const [nameToSearch, setNameToSearch] = useState(null)
@@ -20,7 +32,7 @@ const Persons = ({ persons, setError }) => {
         />
       )
     }
-  
+    console.log(nameToSearch, result)
     return (
       <div>
         <h2>Persons</h2>

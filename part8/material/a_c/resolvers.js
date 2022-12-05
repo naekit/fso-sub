@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { UserInputError, AuthenticationError } = require('@apollo/server')
+const { UserInputError, AuthenticationError } = require('apollo-server')
 const jwt = require('jsonwebtoken')
 const Person = require('./models/person')
 const User = require('./models/user')
