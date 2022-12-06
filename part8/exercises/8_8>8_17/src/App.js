@@ -1,18 +1,57 @@
 import { useEffect, useState } from 'react'
-import { useApolloClient, useQuery } from '@apollo/client'
+import { useQuery, useMutation, useSubscription ,useApolloClient } from '@apollo/client'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
-import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+import Notify from './components/Notify'
+import { ALL_AUTHORS, ALL_BOOKS, BOOK_ADDED } from './queries'
 import Recommend from './components/Recommend'
 
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {
+  // helper that is used to eliminate saving same person twice
+  const uniqByTitle = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.title
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByTitle(allBooks.concat(addedBook)),
+    }
+  })
+}
+
+
 const App = () => {
+  const [errorMessage, setErrorMessage] = useState(null)
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
   const client = useApolloClient()
+
+  const notify = (message) => {
+    setErrorMessage(message)
+    setTimeout(() => {
+      setErrorMessage(null)
+    }, 10000)
+  }
+  
+
+  useSubscription(BOOK_ADDED, {
+    onData: ({ data, client }) => {
+      notify(data)
+      const addedBook = data.data.bookAdded
+      notify(`${addedBook.title} added`)
+
+      updateCache(client.cache, { query: ALL_BOOKS }, addedBook)
+    }
+  })
 
   useEffect(() => {
     const localToken = localStorage.getItem('books-user-token')
@@ -48,6 +87,7 @@ const App = () => {
         }
         
       </div>
+      <Notify errorMessage={errorMessage} />
 
       <Authors show={page === 'authors'} authors={authors.data.allAuthors}/>
       
