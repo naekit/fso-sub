@@ -17,26 +17,26 @@ const parseArgs = (args: Array<string>): MultiplyValues => {
     }
 }
 
-const calculateBmi = (mass: number, height: number): string => {
+export const calculateBmi = (mass: number, height: number): string => {
     const Bmi: number = mass / ((height/100) * (height/100))
     console.log(Bmi)
     switch(true) {
         case Bmi < 16:
-            return 'Underweight (Severe thinness)'
+            return 'Underweight (Severe thinness) : ${Bmi}' 
         case Bmi >= 16 && Bmi < 17:
-            return 'Underweight (Moderate thinness)'
+            return 'Underweight (Moderate thinness) : ${Bmi}'
         case Bmi >= 17 && Bmi < 18.5:
-            return `Underweight (Mild thinness)`
+            return `Underweight (Mild thinness) : ${Bmi}`
         case Bmi >= 18.5 && Bmi < 25:
-            return `Normal range`
+            return `Normal range: ${Bmi}`
         case Bmi >= 25  && Bmi < 30:
-            return `Overweight (Pre-obese)`
+            return `Overweight (Pre-obese) : ${Bmi}`
         case Bmi >= 30 && Bmi < 35:
-            return `Obese (Class I)`
+            return `Obese (Class I) : ${Bmi}`
         case Bmi >= 35 && Bmi < 40:
-            return `Obese (Class II)`
+            return `Obese (Class II) : ${Bmi}`
         case Bmi >= 40:
-            return `Obese (Class III)`
+            return `Obese (Class III) : ${Bmi}`
         default:
             return `Invalid arguments or mixed up height and mass`
     }
