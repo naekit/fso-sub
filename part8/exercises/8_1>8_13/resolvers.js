@@ -15,7 +15,7 @@ const resolvers = {
       bookCount: async () => Book.collection.countDocuments(),
       authorCount: async () => Author.collection.countDocuments(),
       allBooks: async (root, args) => {
-          let booksQ = await Book.find({}).populate('author').exec()
+          let booksQ = await Book.find({}).populate('author')
           if(args.author){
               const booksBy = booksQ.filter(b => b.author === args.author)
               args.genre 
@@ -34,12 +34,6 @@ const resolvers = {
         return context.currentUser
       }
     },
-    Author: {
-      bookCount: (root) => {
-          const booksBy = Book.find({ author: { name: root.name }})
-          return booksBy.length
-      }
-    },
     Mutation: {
       addBook: async (root, args, {currentUser}) => {
           if(!currentUser){
@@ -49,12 +43,15 @@ const resolvers = {
           try {
             const testAuthor = await Author.find({ name: args.author })
             if(!testAuthor[0]){
-              const author = new Author({ name: args.author })
+              const author = new Author({ name: args.author, bookCount: 1 })
               const book = new Book({...args, author: author.id})
 
               await author.save()
               await book.save()
             } else {
+              console.log(testAuthor)
+              testAuthor[0].bookCount += 1
+              await testAuthor[0].save()
               const book = new Book({...args, author: testAuthor[0]._id})
               await book.save()
             }

@@ -5,14 +5,14 @@ const Authors = ({ authors, show }) => {
   if (!show) {
     return null
   }
-
+  console.log(authors)
   return (
     <div>
       <h2>authors</h2>
       <table>
         <tbody>
           <tr>
-            <th></th>
+            <th>name</th>
             <th>born</th>
             <th>books</th>
           </tr>
