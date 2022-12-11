@@ -8,6 +8,18 @@ router.get('/', (_req,res) => {
     res.send(patients.getNonSensitivePatients());
 });
 
+router.get('/:id', (req, res) => {
+
+    const patient = patients.getPatientById(req.params.id);
+
+    if(patient){
+        res.send(patient);
+    } else {
+        res.sendStatus(404);
+    }
+
+});
+
 router.post('/', (req,res) => {
     try {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -16,7 +28,7 @@ router.post('/', (req,res) => {
 
         res.json(addedPatient);
     } catch (error) {
-        let errorMessage = `Somthing is wrong.`;
+        let errorMessage = `Something is wrong.`;
         if(error instanceof Error){
             errorMessage += ` Error: ${error.message}`;
         }

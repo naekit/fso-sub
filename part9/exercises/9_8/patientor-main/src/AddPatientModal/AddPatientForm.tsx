@@ -31,6 +31,7 @@ export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
         dateOfBirth: "",
         occupation: "",
         gender: Gender.Other,
+        entries: ""
       }}
       onSubmit={onSubmit}
       validate={(values) => {
@@ -76,6 +77,13 @@ export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
               label="Occupation"
               placeholder="Occupation"
               name="occupation"
+              component={TextField}
+            />
+            <Field
+              label="Entries"
+              placeholder="Entries"
+              disable="true"
+              name="entries"
               component={TextField}
             />
             <SelectField label="Gender" name="gender" options={genderOptions} />
