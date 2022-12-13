@@ -16,6 +16,10 @@ import { setPatients, getDiagnoses } from './state/reducer';
 const App = () => {
   const [, dispatch] = useStateValue();
   const match = useMatch('/:id')
+  let id: string = ''
+  if(match){
+    id = match.params.id as string
+  }
 
   React.useEffect(() => {
     void axios.get<void>(`${apiBaseUrl}/ping`);
@@ -65,7 +69,7 @@ const App = () => {
           <Divider hidden />
           <Routes>
             <Route path="/" element={<PatientListPage />} />
-            <Route path="/:id" element={<PatientPage id={match?.params.id}/>} />
+            <Route path="/:id" element={<PatientPage id={id}/>} />
           </Routes>
         </Container>
     </div>

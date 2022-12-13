@@ -1,10 +1,16 @@
 import axios from "axios"
+import React from "react";
 import { useEffect, useState } from 'react';
 import { apiBaseUrl } from "../constants"
 import { useStateValue } from '../state/state';
 import { getPatient } from "../state";
-import { Patient, Entry } from '../types';
+import { Patient, Entry, NewEntry } from '../types';
 import styled from 'styled-components'
+import { Button } from "@material-ui/core";
+import {HospitalForm} from "./HospitalForm";
+import { addEntry } from '../state/reducer';
+import { HealthCheckForm } from "./CheckForm";
+import {OccForm} from "./OccForm";
 
 const EntryStyled = styled.div`
     background: rgb(218,244,255);
@@ -85,8 +91,19 @@ const EntryDetails: React.FC<{ entry: Entry }> = ({entry}) => {
     }
 }
 
-const PatientPage = ({id}: {id: string | undefined}) => {
+const PatientPage = ({id}: {id: string}) => {
     const [{ patient }, dispatch] = useStateValue();
+    const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+    const [entryType, setEntryType] = React.useState<String>();
+    const [error, setError] = React.useState<string | undefined>();
+
+
+    const openModal = (): void => setModalOpen(true);
+
+    const closeModal = (): void => {
+      setModalOpen(false);
+    };
+
     useEffect(() => {
         if(id === patient.id){
             return
@@ -106,6 +123,27 @@ const PatientPage = ({id}: {id: string | undefined}) => {
         void setPatient()
     }, [])
 
+    const submitEntry = async (values: NewEntry) => {
+        try {
+            
+          const { data: newPatient } = await axios.post<Patient>(
+            `${apiBaseUrl}/patients/${id}/entries`,
+            values
+          );
+          console.log(newPatient)
+          dispatch(addEntry(newPatient));
+          closeModal();
+        } catch (e: unknown) {
+          if (axios.isAxiosError(e)) {
+            console.error(e?.response?.data || "Unrecognized axios error");
+            setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+          } else {
+            console.error("Unknown error", e);
+            setError("Unknown error");
+          }
+        }
+      };
+
     return (
         <div>
             <h1>{patient.name}</h1>
@@ -113,7 +151,18 @@ const PatientPage = ({id}: {id: string | undefined}) => {
             <p>ssn: {patient.ssn}</p>
             <p>DOB: {patient.dateOfBirth}</p>
             <p>Occupation: {patient.occupation}</p>
-            {patient.entries.length ? <h3>entries</h3>: null}
+            <Button onClick={openModal}>Add Entry</Button>
+            <select onChange={(e) => setEntryType(e.target.value)}>
+                <option value="HealthCheckEntry">Health Check</option>
+                <option value="HospitalEntry">Hospital</option>
+                <option value="OccupationalHealthcareEntry">Occupational</option>
+            </select>
+            {   
+                modalOpen && entryType === 'HospitalEntry' ? <HospitalForm onSubmit={submitEntry} onCancel={closeModal}/>:
+                modalOpen && entryType === 'HealthCheckEntry' ?  <HealthCheckForm onSubmit={submitEntry} onCancel={closeModal}/>:
+                modalOpen && entryType === 'OccupationalHealthcareEntry' ? <OccForm onSubmit={submitEntry} onCancel={closeModal}/>
+                : null 
+            }
             {patient.entries.map(e => 
                 <EntryDetails key={e.id} entry={e} />    
             )}
