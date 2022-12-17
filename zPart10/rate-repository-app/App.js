@@ -1,24 +1,24 @@
+import Constants from 'expo-constants'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View, Pressable, Alert } from 'react-native';
+import Main from './src/components/Main';
 
-export default function App() {
+const App = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Open up App.js to start working on your app!</Text>
-      <Text style={styles.text}>This Works on your nice</Text>
-      <StatusBar style="auto" />
+    <StatusBar></StatusBar>
+      <Main />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#3d2d2d',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 0,
+    padding: 5,
+    paddingBottom: 55,
+    backgroundColor: '#f56c11',
   },
-  text : {
-    color: '#fff'
-  }
 });
+
+export default App  
