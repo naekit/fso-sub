@@ -1,13 +1,14 @@
 import Constants from 'expo-constants'
 import { StyleSheet, View } from 'react-native'
+import { Route, Routes, Navigate } from 'react-router-native';
+
 import RepositoryList from './RepositoryList';
-import BigBlueText from './BigText';
+import AppBar from './AppBar';
+import SignIn from './SignIn';
 
 const styles = StyleSheet.create({
     container: {
         marginTop: Constants.statusBarHeight,
-        marginLeft: 0,
-        flexGrow: 1,
         flexShrink: 1,
         backgroundColor: '#242120',
     },
@@ -17,8 +18,12 @@ const styles = StyleSheet.create({
 const Main = () => {
     return (
         <View style={styles.container}>
-            <BigBlueText />
-            <RepositoryList />
+            <AppBar />
+            <Routes>
+                <Route path="/" element={<RepositoryList />} exact />
+                <Route path="/signin" element={<SignIn />} exact />
+                <Route path="*" element={<Navigate to="/" replace/>}/>
+            </Routes>
         </View>
     )
 }

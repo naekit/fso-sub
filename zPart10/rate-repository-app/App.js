@@ -1,13 +1,15 @@
-import Constants from 'expo-constants'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, Pressable, Alert } from 'react-native';
+import { StyleSheet, View, Alert } from 'react-native';
+import { NativeRouter } from 'react-router-native';
 import Main from './src/components/Main';
 
 const App = () => {
   return (
     <View style={styles.container}>
-    <StatusBar></StatusBar>
-      <Main />
+      <NativeRouter>
+        <Main />
+      </NativeRouter>
+      <StatusBar style='auto'/>
     </View>
   );
 }

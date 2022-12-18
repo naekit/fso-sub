@@ -15,10 +15,13 @@
     "constants": "^0.0.2",
     "expo": "~46.0.17",
     "expo-status-bar": "~1.4.0",
+    "formik": "^2.2.9",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-native": "0.69.6",
-    "react-native-web": "~0.18.7"
+    "react-native-web": "~0.18.7",
+    "react-router-native": "^6.5.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

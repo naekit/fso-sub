@@ -26,9 +26,12 @@ const styles = StyleSheet.create({
     fontWeightBold: {
         fontWeight: theme.fontWeights.bold,
     },
+    center: {
+        textAlign: 'center'
+    }
 });
 
-const Text = ({ color, fontSize, fontWeight, style, ...props}) => {
+const Text = ({ color, fontSize, fontWeight, style, center, ...props}) => {
     const textStyle = [
         styles.text,
         color === 'textSecondary'&& styles.colorTextSecondary,
@@ -37,6 +40,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props}) => {
         fontSize === 'subheading' && styles.fontSizeSubheading,
         fontSize === 'heading' && styles.fontSizeHeading,
         fontWeight === 'bold' && styles.fontWeightBold,
+        center === 'center' && styles.center,
         style
     ]
 
