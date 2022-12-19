@@ -9,7 +9,7 @@ const useRepositories = () => {
     })
     
     
-    const fetchRepositories = () => {
+    const fetchRepositories = async () => {
         // set data
         setRepositories(data.repositories);
     }
