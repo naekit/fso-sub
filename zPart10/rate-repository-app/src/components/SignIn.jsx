@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import useSignIn from '../hooks/useSignIn';
+import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
     page: {
@@ -53,7 +54,7 @@ const SignIn = () => {
     const { username, password } = values;
     try {
         const { data } = await signIn({username, password});
-        console.log(data.authenticate.accessToken);
+        console.log(data)
     } catch (error) {
         console.log(error)
     }
