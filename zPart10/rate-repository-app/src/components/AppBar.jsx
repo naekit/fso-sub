@@ -26,7 +26,6 @@ const AppBar = () => {
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network'
   })
-  const loggedIn = data.me.id!== null ? true: false
 
   return <View style={styles.container}>
     <ScrollView horizontal>
@@ -36,7 +35,7 @@ const AppBar = () => {
         </Text>
     </Link>
     { 
-      loggedIn
+      data?.me
       ? 
       <Link to="/signout" style={styles.navItem}>
           <Text fontWeight="bold" color="textPrimary">
