@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     },
     flexDescription: {
         marginLeft: 10,
+        paddingRight:30
     },
     flexStats: {
         display: 'flex',
@@ -30,6 +31,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginTop: 10
     },
+    extraPad: {
+        paddingLeft: 5,
+    }
 });
 
 
@@ -45,7 +49,7 @@ RepositoryItem = ({ item }) => {
                     <Text color="textPrimary">{item.language}</Text>    
                 </View>
             </View>
-            <Text>{item.description}</Text>
+            <Text style={styles.extraPad}>{item.description}</Text>
             <View style={styles.flexStats}>
                 <View>
                     <Text center="center" fontWeight="bold">
