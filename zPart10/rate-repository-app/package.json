@@ -7,13 +7,24 @@
     "android": "NODE_OPTIONS=--openssl-legacy-provider expo start --android",
     "ios": "NODE_OPTIONS=--openssl-legacy-provider expo start --ios",
     "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web",
-    "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern"
+    "lint": "eslint ./src/**/*.{js,jsx} App.js --no-error-on-unmatched-pattern",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|react-router-native)"
+    ]
   },
   "dependencies": {
     "@apollo/client": "^3.7.2",
     "@expo/dev-server": "0.1.120",
     "@expo/metro-config": "^0.5.1",
     "@expo/webpack-config": "^0.17.0",
+    "@react-native-async-storage/async-storage": "~1.17.3",
     "constants": "^0.0.2",
     "dotenv": "^16.0.3",
     "expo": "~46.0.17",
@@ -25,15 +36,20 @@
     "react-native": "0.69.6",
     "react-native-web": "~0.18.7",
     "react-router-native": "^6.5.0",
-    "yup": "^0.32.11",
-    "@react-native-async-storage/async-storage": "~1.17.3"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/eslint-parser": "^7.19.1",
+    "@testing-library/jest-native": "^5.3.3",
+    "@testing-library/react-native": "^11.5.0",
     "eslint": "^8.29.0",
+    "eslint-plugin-jest": "^27.1.7",
     "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-native": "^4.0.0"
+    "eslint-plugin-react-native": "^4.0.0",
+    "jest": "^27.5.1",
+    "jest-expo": "^47.0.1",
+    "react-test-renderer": "^18.2.0"
   },
   "private": true
 }
