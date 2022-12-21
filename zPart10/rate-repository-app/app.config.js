@@ -7,6 +7,7 @@ export default{
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
+    backgroundColor: "#f56c11",
     splash: {
       image: "./assets/splash.png",
       resizeMode: "contain",

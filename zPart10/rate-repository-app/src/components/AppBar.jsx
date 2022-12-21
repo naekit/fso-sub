@@ -18,6 +18,13 @@ const styles = StyleSheet.create({
     marginRight: 5,
     borderRightColor: 'orange',
     borderRightWidth: 1,
+  },
+  smallNavItem: {
+    fontSize: 12
+  },
+  lastItem: {
+    borderRightWidth: 0,
+    borderRightColor: '#fff',
   }
   // ...
 });
@@ -30,24 +37,38 @@ const AppBar = () => {
   return <View style={styles.container}>
     <ScrollView horizontal>
     <Link to="/" style={styles.navItem}>
-        <Text fontWeight="bold" color="textPrimary">
+        <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
             Repositories
         </Text>
     </Link>
     { 
       data?.me
       ? 
-      <Link to="/signout" style={styles.navItem}>
-          <Text fontWeight="bold" color="textPrimary">
+      <>
+      <Link to="/review" style={styles.navItem}>
+        <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
+            Create a review
+        </Text>
+      </Link>
+      <Link to="/signout">
+          <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
             Sign Out
           </Text>
       </Link>
+      </>
       :
+      <>
       <Link to="/signin" style={styles.navItem}>
-          <Text fontWeight="bold" color="textPrimary">
+          <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
               Sign In
           </Text>
       </Link>
+      <Link to="/signup">
+          <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
+              Sign Up
+          </Text>
+      </Link>
+      </>
     }
     </ScrollView>
   </View>;
