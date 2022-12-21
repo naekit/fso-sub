@@ -1,10 +1,9 @@
-import RepositoryItem from "./RepositoryItem";
+import React from "react";
 import { useQuery } from "@apollo/client";
-import { GET_REPOSITORY } from "../graphql/queries";
-import { useParams } from "react-router-native";
-import { View, Pressable, StyleSheet, FlatList } from "react-native";
+import { GET_USER } from "../graphql/queries";
+import { View, StyleSheet, FlatList } from "react-native";
 import Text from "./Text";
-import * as Linking from 'expo-linking'
+
 
 const styles = StyleSheet.create({
     button: {
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const ReviewItem = ({ item }) => {
+    console.log(item)
     return (
         <View style={styles.flexReview}>
             <View >
@@ -52,49 +52,16 @@ const ReviewItem = ({ item }) => {
     )
 }
 
-const RepositoryInfo = ({data}) => {
-    return (
-        <>
-            <RepositoryItem item={data.repository} />
-            <Pressable onPress={() => Linking.openURL(data.repository.url)} style={styles.button}>
-                <Text color="primary" fontWeight="bold" center="center">Open in GitHub</Text>
-            </Pressable>
-        </>
-    )
-}
+const MyReviews = () => {
+    const { data, loading, refetch } = useQuery(GET_USER, {
+        variables: { includeReviews: true },
+    });
 
+    // console.log(data.me.reviews.edges)
 
-const RepositoryPage = () => {
-    const { id } = useParams()
-    const variables = { id, first: 5}
-    const { data, loading, fetchMore } = useQuery(GET_REPOSITORY, {
-        variables,
-        fetchPolicy: `cache-and-network`
-    })
-
-    const handleFetchMore = () => {
-        const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
-    
-        if(!canFetchMore || !data) {
-          return;
-        }
-
-        fetchMore({
-          variables: {
-            after: data.repository.reviews.pageInfo.endCursor,
-            ...variables,
-          },
-        });
-    };
-
-    const endReach = () => {
-        handleFetchMore()
-    }
-
-    const reviews = data?.repository 
-        ? data.repository.reviews.edges.map(edge => edge.node)
+    const reviews = data?.me 
+        ? data.me.reviews.edges.map(({node}) => node)
         : []
-    
 
     return (
         <>
@@ -106,10 +73,7 @@ const RepositoryPage = () => {
                 :   <FlatList
                         data={reviews}
                         ItemSeparatorComponent={ItemSeparator}
-                        onEndReached={endReach}
-                        onEndReachedThreshold={0.5}
                         renderItem={({ item }) => <ReviewItem item={item} />}
-                        ListHeaderComponent={() => <RepositoryInfo data={data} />}
                     />
             }
         
@@ -117,4 +81,5 @@ const RepositoryPage = () => {
     )
 }
 
-export default RepositoryPage
+
+export default MyReviews

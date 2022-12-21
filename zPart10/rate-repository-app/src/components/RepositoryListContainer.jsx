@@ -41,7 +41,11 @@ const Organizer = ({ sortBy, setSortBy }) => {
   )
 }
 
-const RepositoryListContainer = ({ repositories, loading, sortedBy, setSortBy  }) => {
+const RepositoryListContainer = ({ repositories, onEndReach, loading, sortedBy, setSortBy  }) => {
+
+  const repositoryNodes = repositories
+    ? repositories.edges.map((edge) => edge.node)
+    : [];
 
   return (
         <>
@@ -49,9 +53,11 @@ const RepositoryListContainer = ({ repositories, loading, sortedBy, setSortBy  }
           loading ? <Text color="textPrimary" style={styles.loading}> ... loading</Text>
           :
           <FlatList
-            data={repositories}
+            data={repositoryNodes}
             ItemSeparatorComponent={ItemSeparator}
             renderItem={({item}) => <Link to={`/repository/${item.id}`}><RepositoryItem item={item} /></Link>}
+            onEndReached={onEndReach}
+            onEndReachedThreshold={0.5}
             ListHeaderComponent={() => 
             <>
               <Organizer sortBy={sortedBy} setSortBy={setSortBy} />

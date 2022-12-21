@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   smallNavItem: {
-    fontSize: 12
+    fontSize: 14
   },
   lastItem: {
     borderRightWidth: 0,
@@ -48,6 +48,11 @@ const AppBar = () => {
       <Link to="/review" style={styles.navItem}>
         <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
             Create a review
+        </Text>
+      </Link>
+      <Link to="/myreviews" style={styles.navItem}>
+        <Text style={styles.smallNavItem} fontWeight="bold" color="textPrimary">
+            My reviews
         </Text>
       </Link>
       <Link to="/signout">

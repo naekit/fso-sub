@@ -19,28 +19,21 @@ const RepositoryList = () => {
   const [sort, setSort] = useState('CREATED_AT:DESC')
   const [filter, setFilter] = useState('')
 
-  const { repositories, loading } = useRepositories({
+  const { repositories, loading, fetchMore } = useRepositories({
+    first: 6,
     filter,
     orderBy: sort.split(':')[0],
     orderDirection: sort.split(':')[1],
   });
   
-
   const addFilter = (event) => {
-    console.log(event)
     setFilter(event.toLowerCase())
-    console.log(filter)
   }
 
-  const [repositoryNodes, setRepos] = useState([]);
+  const onEndReach = () => {
+    fetchMore()
+  }
 
-  useEffect(() => {
-    if(loading){
-      return
-    } else {
-      setRepos(repositories.edges.map((edge) => edge.node))
-    }
-  }, [loading]);
   return (
     <>
       <View style={styles.filter}>
@@ -53,12 +46,11 @@ const RepositoryList = () => {
           />
       </View>
       <RepositoryListContainer 
-        repositories={repositoryNodes} 
+        repositories={repositories} 
         loading={loading} 
         sortedBy={sort}
         setSortBy={setSort}
-        setFilter={addFilter}
-        filterVal={filter}
+        onEndReach={onEndReach}
       />
     </>
   ) 
