@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     rating: {
         padding: 10,
         borderWidth: 3,
-        borderColor: "#19fff4",
+        borderColor: "#1a1513",
         backgroundColor: '#f56c11',
     },
     text: {
@@ -41,7 +41,7 @@ const ReviewItem = ({ item }) => {
     return (
         <View style={styles.flexReview}>
             <View >
-                <Text style={styles.rating} color="primary">{item.rating}</Text>
+                <Text fontWeight="bold" style={styles.rating} color="primary">{item.rating}</Text>
             </View>
             <View style={styles.text}>
                 <Text color="textSecondary">{item.user.username}</Text>
