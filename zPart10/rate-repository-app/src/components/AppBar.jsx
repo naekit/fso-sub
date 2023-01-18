@@ -1,6 +1,5 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Text from './Text';
-import Constants from 'expo-constants';
 import { Link } from 'react-router-native';
 import { useQuery } from '@apollo/client';
 import { GET_USER } from '../graphql/queries';
